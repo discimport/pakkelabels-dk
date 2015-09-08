@@ -1,0 +1,30 @@
+{
+  "name": "pakkelabels-dk",
+    "type": "library",
+    "description": "PHP-SDK to communicate with Pakkelabels.dk",
+    "homepage": "http://github.com/discimport/pakkelabels-dk",
+    "authors": [
+        {
+            "name": "Lars Olesen",
+            "email": "lars@intraface.dk"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "Pakkelabels\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+          "Pakkelabels\\Tests\\": "tests"
+        }
+    },
+    "require": {
+        "php": ">=5.2.2"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "4.4.*",
+        "squizlabs/php_codesniffer": "2.*",
+        "satooshi/php-coveralls": "dev-master"
+    }
+}

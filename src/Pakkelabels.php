@@ -1,13 +1,16 @@
 <?php
+namespace Pakkelabels;
+
+use Pakkelabels\Exception\Pakkelabels_Exception;
 
 /*
 Usage:
 ----------------
 The first thing required is to login
-$label = new Pakkelabels('api_user', 'api_key'); 
+$label = new Pakkelabels('api_user', 'api_key');
 
-This will login and fetch the required token. 
-The token is then automatically added to any subsequent calls. 
+This will login and fetch the required token.
+The token is then automatically added to any subsequent calls.
 
 To see the generated token you can use:
 echo $label->getToken();
@@ -38,65 +41,65 @@ class Pakkelabels {
         $this->login();
     }
 
-    private function login(){
+    private function login() {
         $result = $this->_make_api_call('users/login', true, array('api_user' => $this->_api_user, 'api_key' => $this->_api_key));
         $this->_token = $result['token'];
     }
 
-    public function balance(){
+    public function balance() {
         $result = $this->_make_api_call('users/balance');
         return $result['balance'];
     }
 
-    public function pdf($id){
+    public function pdf($id) {
         $result = $this->_make_api_call('shipments/pdf', false, array('id' => $id));
         return $result['base64'];
     }
-    
-    public function shipments($params = array()){
+
+    public function shipments($params = array()) {
         $result = $this->_make_api_call('shipments/shipments', false, $params);
         return $result;
     }
-    
-    public function imported_shipments($params = array()){
+
+    public function imported_shipments($params = array()) {
         $result = $this->_make_api_call('shipments/imported_shipments', false, $params);
         return $result;
     }
 
-    public function create_imported_shipment($params){
+    public function create_imported_shipment($params) {
         $result = $this->_make_api_call('shipments/imported_shipment', true, $params);
         return $result;
     }
-    
-    public function create_shipment($params){
+
+    public function create_shipment($params) {
         $result = $this->_make_api_call('shipments/shipment', true, $params);
         return $result;
     }
 
-    public function freight_rates(){
+    public function freight_rates() {
         $result = $this->_make_api_call('shipments/freight_rates');
         return $result;
     }
 
-    public function payment_requests(){
+    public function payment_requests() {
         $result = $this->_make_api_call('users/payment_requests');
         return $result;
     }
 
-    public function gls_droppoints($params){
+    public function gls_droppoints($params) {
         $result = $this->_make_api_call('shipments/gls_droppoints', false, $params);
         return $result;
     }
 
-    public function getToken(){
+    public function getToken() {
         return $this->_token;
     }
-    
-    private function _make_api_call($method, $doPost = false,$params = array()){
+
+    private function _make_api_call($method, $doPost = false, $params = array()) {
         $ch = curl_init();
         $params['token'] = $this->_token;
 
-        $query = http_build_query($params);    
+        $query = http_build_query($params);
         if ($doPost){
             curl_setopt($ch, CURLOPT_URL, self::API_ENDPOINT . '/' . $method);
             curl_setopt($ch, CURLOPT_POST, 1);
@@ -112,14 +115,12 @@ class Pakkelabels {
 
         $output = json_decode($output, true);
         if ($http_code != 200){
-                        if(is_array($output['message'])){
-                                print_r($output['message']);
-                                die();
-                        }else{
-                                die($output['message']);
-                        }
-                }
+            if (is_array($output['message'])){
+                throw new Pakkelabels_Exception($output['message']);
+            } else {
+                throw new Pakkelabels_Exception($output['message']);
+            }
+        }
         return $output;
     }
 }
-?>
