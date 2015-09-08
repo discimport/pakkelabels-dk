@@ -1,5 +1,5 @@
 {
-  "name": "pakkelabels/pakkelabels",
+  "name": "discimport/pakkelabels",
     "type": "library",
     "description": "PHP-SDK to communicate with Pakkelabels.dk",
     "homepage": "http://github.com/discimport/pakkelabels-dk",
