@@ -1,101 +1,240 @@
 <?php
+/**
+ * Pakkelabels
+ *
+ * PHP version 5
+ *
+ * @category  Pakkelabels
+ * @package   Pakkelabels
+ * @author    Lars Olesen <lars@intraface.dk>
+ * @copyright 2015 Lars Olesen
+ * @license   http://opensource.org/licenses/bsd-license.php New BSD License
+ * @version   GIT: <git_id>
+ * @link      http://github.com/discimport/pakkelabels-dk
+ */
 namespace Pakkelabels;
 
 use Pakkelabels\Exception\Pakkelabels_Exception;
 
-/*
-Usage:
-----------------
-The first thing required is to login
-$label = new Pakkelabels('api_user', 'api_key');
-
-This will login and fetch the required token.
-The token is then automatically added to any subsequent calls.
-
-To see the generated token you can use:
-echo $label->getToken();
-
-Examples:
-----------------
-// Get all Post Danmark labels shipped to Denmark
-$labels = $label->shipments(array('shipping_agent' => 'pdk', 'receiver_country' => 'DK'));
-
-// Display the PDF for a specific label
-$base64 = $label->pdf(31629);
-$pdf = base64_decode($base64);
-header('Content-type: application/pdf');
-header('Content-Disposition: inline; filename="label.pdf"');
-echo $pdf;
-*/
+/**
+ * Class Pakkelabels
+ *
+ * Usage:
+ * ----------------
+ * The first thing required is to login
+ * $label = new Pakkelabels('api_user', 'api_key');
+ *
+ * This will login and fetch the required token.
+ * The token is then automatically added to any subsequent calls.
+ *
+ * To see the generated token you can use:
+ * echo $label->getToken();
+ *
+ * Examples:
+ * ----------------
+ * // Get all Post Danmark labels shipped to Denmark
+ * $labels = $label->shipments(array('shipping_agent' => 'pdk', 'receiver_country' => 'DK'));
+ *
+ * // Display the PDF for a specific label
+ * $base64 = $label->pdf(31629);
+ * $pdf = base64_decode($base64);
+ * header('Content-type: application/pdf');
+ * header('Content-Disposition: inline; filename="label.pdf"');
+ * echo $pdf;
+ *
+ * @category  Pakkelabels
+ * @package   Pakkelabels
+ * @author    Lars Olesen <lars@intraface.dk>
+ * @copyright 2015 Lars Olesen
+ * @license   http://opensource.org/licenses/bsd-license.php New BSD License
+ * @link      http://github.com/discimport/pakkelabels-dk
+ */
 
 class Pakkelabels {
+
+    /**
+     * API Endpoint URL
+     *
+     * @var string
+     */
     const API_ENDPOINT = 'https://app.pakkelabels.dk/api/public/v1';
 
-    private $_api_user;
-    private $_api_key;
-    private $_token;
+    /**
+     * API user
+     *
+     * @var string
+     */
+    protected $_api_user;
 
-    public function __construct($api_user, $api_key){
+    /**
+     * API key
+     *
+     * @var string
+     */
+    protected $_api_key;
+
+    /**
+     * Token
+     *
+     * @var string
+     */
+    protected $_token;
+
+    /**
+     * Constructor
+     *
+     * @param string $api_user
+     * @param string $api_key
+     *
+     * @return mixed
+     * @throws \Pakkelabels_Exception
+     */
+    public function __construct($api_user, $api_key) {
         $this->_api_user = $api_user;
         $this->_api_key = $api_key;
         $this->login();
     }
 
-    private function login() {
+    /**
+     * Login
+     *
+     * @return void
+     * @throws \Pakkelabels_Exception
+     */
+    protected function login() {
         $result = $this->_make_api_call('users/login', true, array('api_user' => $this->_api_user, 'api_key' => $this->_api_key));
         $this->_token = $result['token'];
     }
 
+    /**
+     * Get balance
+     *
+     * @return void
+     * @throws \Pakkelabels_Exception
+     */
     public function balance() {
         $result = $this->_make_api_call('users/balance');
         return $result['balance'];
     }
 
+    /**
+     * Get PDF
+     *
+     * @return base64 encoded string
+     * @throws \Pakkelabels_Exception
+     */
     public function pdf($id) {
         $result = $this->_make_api_call('shipments/pdf', false, array('id' => $id));
         return $result['base64'];
     }
 
+    /**
+     * Search shipments
+     *
+     * @param array $params
+     *
+     * @return mixed
+     * @throws \Pakkelabels_Exception
+     */
     public function shipments($params = array()) {
         $result = $this->_make_api_call('shipments/shipments', false, $params);
         return $result;
     }
 
+    /**
+     * Get imported shipments
+     *
+     * @param array $params
+     *
+     * @return mixed
+     * @throws \Pakkelabels_Exception
+     */
     public function imported_shipments($params = array()) {
         $result = $this->_make_api_call('shipments/imported_shipments', false, $params);
         return $result;
     }
 
+    /**
+     * Create imported shipment
+     *
+     * @param array $params
+     *
+     * @return mixed
+     * @throws \Pakkelabels_Exception
+     */
     public function create_imported_shipment($params) {
         $result = $this->_make_api_call('shipments/imported_shipment', true, $params);
         return $result;
     }
 
+    /**
+     * Create shipment
+     *
+     * @param array $params
+     *
+     * @return mixed
+     * @throws \Pakkelabels_Exception
+     */
     public function create_shipment($params) {
         $result = $this->_make_api_call('shipments/shipment', true, $params);
         return $result;
     }
 
+    /**
+     * Get freight rates
+     *
+     * @return mixed
+     * @throws \Pakkelabels_Exception
+     */
     public function freight_rates() {
         $result = $this->_make_api_call('shipments/freight_rates');
         return $result;
     }
 
+    /**
+     * Get payment requests
+     *
+     * @return mixed
+     * @throws \Pakkelabels_Exception
+     */
     public function payment_requests() {
         $result = $this->_make_api_call('users/payment_requests');
         return $result;
     }
 
+    /**
+     * Get GLS Droppoints
+     *
+     * @param array $params
+     *
+     * @return mixed
+     * @throws \Pakkelabels_Exception
+     */
     public function gls_droppoints($params) {
         $result = $this->_make_api_call('shipments/gls_droppoints', false, $params);
         return $result;
     }
 
+    /**
+     * Get token
+     *
+     * @return string
+     */
     public function getToken() {
         return $this->_token;
     }
 
-    private function _make_api_call($method, $doPost = false, $params = array()) {
+    /**
+     * Make API Call
+     *
+     * @param string  $method
+     * @param boolean $doPost
+     * @param array   $params
+     *
+     * @return mixed
+     * @throws \Pakkelabels_Exception
+     */
+    protected function _make_api_call($method, $doPost = false, $params = array()) {
         $ch = curl_init();
         $params['token'] = $this->_token;
 
