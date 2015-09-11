@@ -254,8 +254,9 @@ class Pakkelabels {
 
         $output = json_decode($output, true);
         if ($http_code != 200){
-            if (is_array($output['message'])){
-                throw new Pakkelabels_Exception($output['message']);
+            if (is_array($output['message'])) {
+                print_r($output['message']);
+                die();
             } else {
                 throw new Pakkelabels_Exception($output['message']);
             }
