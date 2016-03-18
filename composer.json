@@ -3,6 +3,7 @@
     "type": "library",
     "description": "PHP-SDK to communicate with Pakkelabels.dk",
     "homepage": "http://github.com/discimport/pakkelabels-dk",
+    "license": "MIT",
     "authors": [
         {
             "name": "Lars Olesen",
