@@ -1,4 +1,5 @@
-# Pakkelabels.dk PHP SDK [![Build Status](https://travis-ci.org/discimport/pakkelabels-dk.svg?branch=master)](https://travis-ci.org/discimport/pakkelabels-dk) [![Coverage Status](https://coveralls.io/repos/discimport/pakkelabels-dk/badge.svg)](https://coveralls.io/r/discimport/pakkelabels-dk)
+# Pakkelabels.dk PHP SDK
+[![Build Status](https://travis-ci.org/discimport/pakkelabels-dk.svg?branch=master)](https://travis-ci.org/discimport/pakkelabels-dk) [![Coverage Status](https://coveralls.io/repos/discimport/pakkelabels-dk/badge.svg)](https://coveralls.io/r/discimport/pakkelabels-dk) [![Latest Stable Version](https://poser.pugx.org/discimport/pakkelabels/v/stable)](https://packagist.org/packages/discimport/pakkelabels) [![Total Downloads](https://poser.pugx.org/discimport/pakkelabels/downloads)](https://packagist.org/packages/discimport/pakkelabels) [![License](https://poser.pugx.org/discimport/pakkelabels/license)](https://packagist.org/packages/discimport/pakkelabels)
 
 PHP SDK for [Pakkelabels.dk API](https://www.pakkelabels.dk/integration/api/) from the Danish shipping service [Pakkelabels.dk](https://www.pakkelabels.dk). 
 
