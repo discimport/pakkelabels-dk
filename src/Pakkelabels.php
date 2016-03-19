@@ -65,21 +65,21 @@ class Pakkelabels
      *
      * @var string
      */
-    protected $_api_user;
+    protected $api_user;
 
     /**
      * API key
      *
      * @var string
      */
-    protected $_api_key;
+    protected $api_key;
 
     /**
      * Token
      *
      * @var string
      */
-    protected $_token;
+    protected $token;
 
     /**
      * Constructor
@@ -92,8 +92,8 @@ class Pakkelabels
      */
     public function __construct($api_user, $api_key)
     {
-        $this->_api_user = $api_user;
-        $this->_api_key = $api_key;
+        $this->api_user = $api_user;
+        $this->api_key = $api_key;
         $this->login();
     }
 
@@ -105,8 +105,8 @@ class Pakkelabels
      */
     protected function login()
     {
-        $result = $this->_make_api_call('users/login', true, array('api_user' => $this->_api_user, 'api_key' => $this->_api_key));
-        $this->_token = $result['token'];
+        $result = $this->make_api_call('users/login', true, array('api_user' => $this->api_user, 'api_key' => $this->api_key));
+        $this->token = $result['token'];
     }
 
     /**
@@ -117,7 +117,7 @@ class Pakkelabels
      */
     public function balance()
     {
-        $result = $this->_make_api_call('users/balance');
+        $result = $this->make_api_call('users/balance');
         return $result['balance'];
     }
 
@@ -129,7 +129,7 @@ class Pakkelabels
      */
     public function pdf($id)
     {
-        $result = $this->_make_api_call('shipments/pdf', false, array('id' => $id));
+        $result = $this->make_api_call('shipments/pdf', false, array('id' => $id));
         return $result['base64'];
     }
 
@@ -143,7 +143,7 @@ class Pakkelabels
      */
     public function shipments($params = array())
     {
-        $result = $this->_make_api_call('shipments/shipments', false, $params);
+        $result = $this->make_api_call('shipments/shipments', false, $params);
         return $result;
     }
 
@@ -157,7 +157,7 @@ class Pakkelabels
      */
     public function imported_shipments($params = array())
     {
-        $result = $this->_make_api_call('shipments/imported_shipments', false, $params);
+        $result = $this->make_api_call('shipments/imported_shipments', false, $params);
         return $result;
     }
 
@@ -171,7 +171,7 @@ class Pakkelabels
      */
     public function create_imported_shipment($params)
     {
-        $result = $this->_make_api_call('shipments/imported_shipment', true, $params);
+        $result = $this->make_api_call('shipments/imported_shipment', true, $params);
         return $result;
     }
 
@@ -185,7 +185,7 @@ class Pakkelabels
      */
     public function create_shipment($params)
     {
-        $result = $this->_make_api_call('shipments/shipment', true, $params);
+        $result = $this->make_api_call('shipments/shipment', true, $params);
         return $result;
     }
 
@@ -197,7 +197,7 @@ class Pakkelabels
      */
     public function freight_rates()
     {
-        $result = $this->_make_api_call('shipments/freight_rates');
+        $result = $this->make_api_call('shipments/freight_rates');
         return $result;
     }
 
@@ -209,7 +209,7 @@ class Pakkelabels
      */
     public function payment_requests()
     {
-        $result = $this->_make_api_call('users/payment_requests');
+        $result = $this->make_api_call('users/payment_requests');
         return $result;
     }
 
@@ -223,7 +223,7 @@ class Pakkelabels
      */
     public function gls_droppoints($params)
     {
-        $result = $this->_make_api_call('shipments/gls_droppoints', false, $params);
+        $result = $this->make_api_call('shipments/gls_droppoints', false, $params);
         return $result;
     }
 
@@ -234,7 +234,7 @@ class Pakkelabels
      */
     public function getToken()
     {
-        return $this->_token;
+        return $this->token;
     }
 
     /**
@@ -247,10 +247,10 @@ class Pakkelabels
      * @return mixed
      * @throws \Pakkelabels_Exception
      */
-    protected function _make_api_call($method, $doPost = false, $params = array())
+    protected function make_api_call($method, $doPost = false, $params = array())
     {
         $ch = curl_init();
-        $params['token'] = $this->_token;
+        $params['token'] = $this->token;
 
         $query = http_build_query($params);
         if ($doPost) {
