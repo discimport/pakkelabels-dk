@@ -8,7 +8,7 @@
  * @package   Pakkelabels
  * @author    Lars Olesen <lars@intraface.dk>
  * @copyright 2015 Lars Olesen
- * @license   http://opensource.org/licenses/bsd-license.php New BSD License
+ * @license   MIT Open Source License https://opensource.org/licenses/MIT
  * @version   GIT: <git_id>
  * @link      http://github.com/discimport/pakkelabels-dk
  */
@@ -34,6 +34,10 @@ class Pakkelabels_Exception extends \Exception
      */
     public function __construct($message = null)
     {
-        parent::__construct($message);
+         if (is_array($message)) {
+             parent::__construct(implode(', ', $message));
+         } else {
+             parent::__construct($message);
+         }
     }
 }

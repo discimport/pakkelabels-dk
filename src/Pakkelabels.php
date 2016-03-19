@@ -8,7 +8,7 @@
  * @package   Pakkelabels
  * @author    Lars Olesen <lars@intraface.dk>
  * @copyright 2015 Lars Olesen
- * @license   http://opensource.org/licenses/bsd-license.php New BSD License
+ * @license   MIT Open Source License https://opensource.org/licenses/MIT
  * @version   GIT: <git_id>
  * @link      http://github.com/discimport/pakkelabels-dk
  */
@@ -87,7 +87,6 @@ class Pakkelabels
      * @param string $api_user
      * @param string $api_key
      *
-     * @return mixed
      * @throws \Pakkelabels_Exception
      */
     public function __construct($api_user, $api_key)
@@ -268,12 +267,7 @@ class Pakkelabels
 
         $output = json_decode($output, true);
         if ($http_code != 200) {
-            if (is_array($output['message'])) {
-                print_r($output['message']);
-                die();
-            } else {
-                throw new Pakkelabels_Exception($output['message']);
-            }
+            throw new Pakkelabels_Exception($output['message']);
         }
         return $output;
     }
