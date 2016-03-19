@@ -14,6 +14,7 @@
  */
 namespace Pakkelabels;
 
+use Pakkelabels\Client;
 use Pakkelabels\Exception\PakkelabelsException;
 
 /**
@@ -52,14 +53,6 @@ use Pakkelabels\Exception\PakkelabelsException;
 
 class Pakkelabels
 {
-
-    /**
-     * API Endpoint URL
-     *
-     * @var string
-     */
-    const API_ENDPOINT = 'https://app.pakkelabels.dk/api/public/v1';
-
     /**
      * API user
      *
@@ -252,27 +245,7 @@ class Pakkelabels
      */
     protected function makeApiCall($method, $doPost = false, $params = array())
     {
-        $ch = curl_init();
-        $params['token'] = $this->token;
-
-        $query = http_build_query($params);
-        if ($doPost) {
-            curl_setopt($ch, CURLOPT_URL, self::API_ENDPOINT . '/' . $method);
-            curl_setopt($ch, CURLOPT_POST, 1);
-            curl_setopt($ch, CURLOPT_POSTFIELDS, $query);
-        } else {
-            curl_setopt($ch, CURLOPT_URL, self::API_ENDPOINT . '/' . $method . '?' . $query);
-        }
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-
-        $output = curl_exec($ch);
-        $http_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-        curl_close($ch);
-
-        $output = json_decode($output, true);
-        if ($http_code != 200) {
-            throw new PakkelabelsException($output['message']);
-        }
-        return $output;
+        $client = new Request($this->token);
+        return $client->call($method, $doPost, $params);
     }
 }
