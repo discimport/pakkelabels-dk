@@ -15,10 +15,10 @@ Below is a simple PHP script which illustrate the minimum amount of code needed 
 
     <?php
     use Pakkelabels\Pakkelabels;
-    
+
     try {
       $label = new Pakkelabels('api_user', 'api_key');
-    } catch (Pakkelabels_Exception $e) {
+    } catch (PakkelabelsException $e) {
       echo $e->getMessage();
     }
 
@@ -59,7 +59,6 @@ To create a test shipment with Post Danmark, and then output the Track&Trace num
       'delivery' => 'true',
       'test' => 'true' // Change to false when going live
     );
- 
+
     $shipment = $label->create_shipment($data);
     echo 'Track&Trace: ' . $shipment['pkg_no'];
-  
