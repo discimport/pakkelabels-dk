@@ -104,7 +104,11 @@ class Pakkelabels
      */
     protected function login()
     {
-        $result = $this->make_api_call('users/login', true, array('api_user' => $this->api_user, 'api_key' => $this->api_key));
+        $result = $this->makeApiCall(
+            'users/login',
+            true,
+            array('api_user' => $this->api_user, 'api_key' => $this->api_key)
+        );
         $this->token = $result['token'];
     }
 
@@ -116,7 +120,7 @@ class Pakkelabels
      */
     public function balance()
     {
-        $result = $this->make_api_call('users/balance');
+        $result = $this->makeApiCall('users/balance');
         return $result['balance'];
     }
 
@@ -128,7 +132,7 @@ class Pakkelabels
      */
     public function pdf($id)
     {
-        $result = $this->make_api_call('shipments/pdf', false, array('id' => $id));
+        $result = $this->makeApiCall('shipments/pdf', false, array('id' => $id));
         return $result['base64'];
     }
 
@@ -142,7 +146,7 @@ class Pakkelabels
      */
     public function shipments($params = array())
     {
-        $result = $this->make_api_call('shipments/shipments', false, $params);
+        $result = $this->makeApiCall('shipments/shipments', false, $params);
         return $result;
     }
 
@@ -154,9 +158,9 @@ class Pakkelabels
      * @return mixed
      * @throws \PakkelabelsException
      */
-    public function imported_shipments($params = array())
+    public function importedShipments($params = array())
     {
-        $result = $this->make_api_call('shipments/imported_shipments', false, $params);
+        $result = $this->makeApiCall('shipments/imported_shipments', false, $params);
         return $result;
     }
 
@@ -168,9 +172,9 @@ class Pakkelabels
      * @return mixed
      * @throws \PakkelabelsException
      */
-    public function create_imported_shipment($params)
+    public function createImportedShipment($params)
     {
-        $result = $this->make_api_call('shipments/imported_shipment', true, $params);
+        $result = $this->makeApiCall('shipments/imported_shipment', true, $params);
         return $result;
     }
 
@@ -182,9 +186,9 @@ class Pakkelabels
      * @return mixed
      * @throws \PakkelabelsException
      */
-    public function create_shipment($params)
+    public function createShipment($params)
     {
-        $result = $this->make_api_call('shipments/shipment', true, $params);
+        $result = $this->makeApiCall('shipments/shipment', true, $params);
         return $result;
     }
 
@@ -194,9 +198,9 @@ class Pakkelabels
      * @return mixed
      * @throws \PakkelabelsException
      */
-    public function freight_rates()
+    public function freightRates()
     {
-        $result = $this->make_api_call('shipments/freight_rates');
+        $result = $this->makeApiCall('shipments/freight_rates');
         return $result;
     }
 
@@ -206,9 +210,9 @@ class Pakkelabels
      * @return mixed
      * @throws \PakkelabelsException
      */
-    public function payment_requests()
+    public function paymentRequests()
     {
-        $result = $this->make_api_call('users/payment_requests');
+        $result = $this->makeApiCall('users/payment_requests');
         return $result;
     }
 
@@ -220,9 +224,9 @@ class Pakkelabels
      * @return mixed
      * @throws \PakkelabelsException
      */
-    public function gls_droppoints($params)
+    public function glsDroppoints($params)
     {
-        $result = $this->make_api_call('shipments/gls_droppoints', false, $params);
+        $result = $this->makeApiCall('shipments/gls_droppoints', false, $params);
         return $result;
     }
 
@@ -246,7 +250,7 @@ class Pakkelabels
      * @return mixed
      * @throws \PakkelabelsException
      */
-    protected function make_api_call($method, $doPost = false, $params = array())
+    protected function makeApiCall($method, $doPost = false, $params = array())
     {
         $ch = curl_init();
         $params['token'] = $this->token;
