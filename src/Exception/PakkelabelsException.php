@@ -15,8 +15,10 @@
 
 namespace Pakkelabels\Exception;
 
+use Exception;
+
 /**
- * Class Pakkelabels_Exception
+ * Class Pakkelabels\Exception
  *
  * @category  Pakkelabels
  * @package   Pakkelabels
@@ -25,7 +27,7 @@ namespace Pakkelabels\Exception;
  * @license   http://opensource.org/licenses/bsd-license.php New BSD License
  * @link      http://github.com/discimport/pakkelabels-dk
  */
-class Pakkelabels_Exception extends \Exception
+class PakkelabelsException extends \Exception
 {
     /**
      * Construct the exception.

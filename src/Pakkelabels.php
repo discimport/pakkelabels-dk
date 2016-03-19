@@ -14,7 +14,7 @@
  */
 namespace Pakkelabels;
 
-use Pakkelabels\Exception\Pakkelabels_Exception;
+use Pakkelabels\Exception\PakkelabelsException;
 
 /**
  * Class Pakkelabels
@@ -87,7 +87,7 @@ class Pakkelabels
      * @param string $api_user
      * @param string $api_key
      *
-     * @throws \Pakkelabels_Exception
+     * @throws \PakkelabelsException
      */
     public function __construct($api_user, $api_key)
     {
@@ -100,7 +100,7 @@ class Pakkelabels
      * Login
      *
      * @return void
-     * @throws \Pakkelabels_Exception
+     * @throws \PakkelabelsException
      */
     protected function login()
     {
@@ -112,7 +112,7 @@ class Pakkelabels
      * Get balance
      *
      * @return void
-     * @throws \Pakkelabels_Exception
+     * @throws \PakkelabelsException
      */
     public function balance()
     {
@@ -124,7 +124,7 @@ class Pakkelabels
      * Get PDF
      *
      * @return base64 encoded string
-     * @throws \Pakkelabels_Exception
+     * @throws \PakkelabelsException
      */
     public function pdf($id)
     {
@@ -138,7 +138,7 @@ class Pakkelabels
      * @param array $params
      *
      * @return mixed
-     * @throws \Pakkelabels_Exception
+     * @throws \PakkelabelsException
      */
     public function shipments($params = array())
     {
@@ -152,7 +152,7 @@ class Pakkelabels
      * @param array $params
      *
      * @return mixed
-     * @throws \Pakkelabels_Exception
+     * @throws \PakkelabelsException
      */
     public function imported_shipments($params = array())
     {
@@ -166,7 +166,7 @@ class Pakkelabels
      * @param array $params
      *
      * @return mixed
-     * @throws \Pakkelabels_Exception
+     * @throws \PakkelabelsException
      */
     public function create_imported_shipment($params)
     {
@@ -180,7 +180,7 @@ class Pakkelabels
      * @param array $params
      *
      * @return mixed
-     * @throws \Pakkelabels_Exception
+     * @throws \PakkelabelsException
      */
     public function create_shipment($params)
     {
@@ -192,7 +192,7 @@ class Pakkelabels
      * Get freight rates
      *
      * @return mixed
-     * @throws \Pakkelabels_Exception
+     * @throws \PakkelabelsException
      */
     public function freight_rates()
     {
@@ -204,7 +204,7 @@ class Pakkelabels
      * Get payment requests
      *
      * @return mixed
-     * @throws \Pakkelabels_Exception
+     * @throws \PakkelabelsException
      */
     public function payment_requests()
     {
@@ -218,7 +218,7 @@ class Pakkelabels
      * @param array $params
      *
      * @return mixed
-     * @throws \Pakkelabels_Exception
+     * @throws \PakkelabelsException
      */
     public function gls_droppoints($params)
     {
@@ -244,7 +244,7 @@ class Pakkelabels
      * @param array   $params
      *
      * @return mixed
-     * @throws \Pakkelabels_Exception
+     * @throws \PakkelabelsException
      */
     protected function make_api_call($method, $doPost = false, $params = array())
     {
@@ -267,7 +267,7 @@ class Pakkelabels
 
         $output = json_decode($output, true);
         if ($http_code != 200) {
-            throw new Pakkelabels_Exception($output['message']);
+            throw new PakkelabelsException($output['message']);
         }
         return $output;
     }

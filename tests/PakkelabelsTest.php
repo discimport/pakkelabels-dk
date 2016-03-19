@@ -3,7 +3,7 @@
 namespace Pakkelabels\Tests;
 
 use Pakkelabels\Pakkelabels;
-use Pakkelabels\Exception\Pakkelabels_Exception;
+use Pakkelabels\Exception\PakkelabelsException;
 
 /**
  * Class ClientTest
@@ -24,7 +24,7 @@ class PakkelabelsTest extends \PHPUnit_Framework_TestCase
         try {
             $client = $this->getClient($invalid_user, $invalid_api_key);
         }
-        catch (Pakkelabels_Exception $expected) {
+        catch (PakkelabelsException $expected) {
             $this->assertEquals($expected->getMessage(), 'Incorrect API Key or API User');
             return;
         }
