@@ -11,7 +11,28 @@ class Request
      *
      * @var string
      */
-    const API_ENDPOINT = 'https://app.pakkelabels.dk/api/public/v1';
+    const API_ENDPOINT = 'https://app.pakkelabels.dk/api/public/v2';
+
+    /**
+     * API Version
+     *
+     * @var string
+     */
+    const VERSION = '1.1';
+
+    /**
+     * API user
+     *
+     * @var string
+     */
+    protected $api_user;
+
+    /**
+     * API key
+     *
+     * @var string
+     */
+    protected $api_key;
 
    /**
      * Token
@@ -20,9 +41,35 @@ class Request
      */
     protected $token;
 
-    function __construct($token)
+    /**
+     * Constructor
+     *
+     * @param string $api_user
+     * @param string $api_key
+     *
+     * @throws \PakkelabelsException
+     */
+    public function __construct($api_user, $api_key)
     {
-        $this->token = $token;
+        $this->api_user = $api_user;
+        $this->api_key = $api_key;
+        $this->login();
+    }
+
+    /**
+     * Login
+     *
+     * @return void
+     * @throws \PakkelabelsException
+     */
+    protected function login()
+    {
+        $result = $this->call(
+            'users/login',
+            true,
+            array('api_user' => $this->api_user, 'api_key' => $this->api_key)
+        );
+        $this->token = $result['token'];
     }
 
     /**
@@ -32,13 +79,14 @@ class Request
      * @param boolean $doPost
      * @param array   $params
      *
-     * @return mixed
+     * @return \Pakkelabels\Response
      * @throws \PakkelabelsException
      */
     public function call($method, $doPost = false, $params = array())
     {
         $ch = curl_init();
         $params['token'] = $this->token;
+        $params['user_agent'] = 'pdk_php_library v' . self::VERSION;
 
         $query = http_build_query($params);
         if ($doPost) {

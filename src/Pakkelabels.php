@@ -54,25 +54,11 @@ use Pakkelabels\Exception\PakkelabelsException;
 class Pakkelabels
 {
     /**
-     * API user
+     * Request
      *
-     * @var string
+     * @var object
      */
-    protected $api_user;
-
-    /**
-     * API key
-     *
-     * @var string
-     */
-    protected $api_key;
-
-    /**
-     * Token
-     *
-     * @var string
-     */
-    protected $token;
+    protected $request;
 
     /**
      * Constructor
@@ -86,23 +72,19 @@ class Pakkelabels
     {
         $this->api_user = $api_user;
         $this->api_key = $api_key;
-        $this->login();
+        $this->createRequest($api_user, $api_key);
     }
 
     /**
-     * Login
+     * Create request
      *
      * @return void
      * @throws \PakkelabelsException
      */
-    protected function login()
+    protected function createRequest($api_user, $api_key)
     {
-        $result = $this->makeApiCall(
-            'users/login',
-            true,
-            array('api_user' => $this->api_user, 'api_key' => $this->api_key)
-        );
-        $this->token = $result['token'];
+        $request = new Request($api_user, $api_key);
+        $request->login();
     }
 
     /**
@@ -113,7 +95,7 @@ class Pakkelabels
      */
     public function balance()
     {
-        $result = $this->makeApiCall('users/balance');
+        $result = $this->request->call('users/balance');
         return $result['balance'];
     }
 
@@ -125,7 +107,7 @@ class Pakkelabels
      */
     public function pdf($id)
     {
-        $result = $this->makeApiCall('shipments/pdf', false, array('id' => $id));
+        $result = $this->request->call('shipments/pdf', false, array('id' => $id));
         return $result['base64'];
     }
 
@@ -139,7 +121,7 @@ class Pakkelabels
      */
     public function shipments($params = array())
     {
-        $result = $this->makeApiCall('shipments/shipments', false, $params);
+        $result = $this->request->call('shipments/shipments', false, $params);
         return $result;
     }
 
@@ -153,7 +135,7 @@ class Pakkelabels
      */
     public function importedShipments($params = array())
     {
-        $result = $this->makeApiCall('shipments/imported_shipments', false, $params);
+        $result = $this->request->call('shipments/imported_shipments', false, $params);
         return $result;
     }
 
@@ -167,7 +149,7 @@ class Pakkelabels
      */
     public function createImportedShipment($params)
     {
-        $result = $this->makeApiCall('shipments/imported_shipment', true, $params);
+        $result = $this->request->call('shipments/imported_shipment', true, $params);
         return $result;
     }
 
@@ -181,7 +163,7 @@ class Pakkelabels
      */
     public function createShipment($params)
     {
-        $result = $this->makeApiCall('shipments/shipment', true, $params);
+        $result = $this->request->call('shipments/shipment', true, $params);
         return $result;
     }
 
@@ -193,7 +175,7 @@ class Pakkelabels
      */
     public function freightRates()
     {
-        $result = $this->makeApiCall('shipments/freight_rates');
+        $result = $this->request->call('shipments/freight_rates');
         return $result;
     }
 
@@ -205,7 +187,7 @@ class Pakkelabels
      */
     public function paymentRequests()
     {
-        $result = $this->makeApiCall('users/payment_requests');
+        $result = $this->request->call('users/payment_requests');
         return $result;
     }
 
@@ -219,7 +201,7 @@ class Pakkelabels
      */
     public function glsDroppoints($params)
     {
-        $result = $this->makeApiCall('shipments/gls_droppoints', false, $params);
+        $result = $this->request->call('shipments/gls_droppoints', false, $params);
         return $result;
     }
 
@@ -230,22 +212,6 @@ class Pakkelabels
      */
     public function getToken()
     {
-        return $this->token;
-    }
-
-    /**
-     * Make API Call
-     *
-     * @param string  $method
-     * @param boolean $doPost
-     * @param array   $params
-     *
-     * @return mixed
-     * @throws \PakkelabelsException
-     */
-    protected function makeApiCall($method, $doPost = false, $params = array())
-    {
-        $client = new Request($this->token);
-        return $client->call($method, $doPost, $params);
+        return $this->request->getToken();
     }
 }

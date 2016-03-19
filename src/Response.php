@@ -6,8 +6,13 @@ class Response
 {
     protected $output;
 
-    function __construct($output)
+    public function __construct($output)
     {
         $this->output = $output;
+    }
+
+    public function get()
+    {
+        return $this->output;
     }
 }
