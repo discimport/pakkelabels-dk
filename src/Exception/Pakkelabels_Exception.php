@@ -34,10 +34,10 @@ class Pakkelabels_Exception extends \Exception
      */
     public function __construct($message = null)
     {
-         if (is_array($message)) {
-             parent::__construct(implode(', ', $message));
-         } else {
-             parent::__construct($message);
-         }
+        if (is_array($message)) {
+            parent::__construct(implode(', ', $message));
+        } else {
+            parent::__construct($message);
+        }
     }
 }
