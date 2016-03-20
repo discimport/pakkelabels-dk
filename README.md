@@ -3,7 +3,7 @@
 
 PHP SDK for [Pakkelabels.dk API](https://www.pakkelabels.dk/integration/api/) from the Danish shipping service [Pakkelabels.dk](https://www.pakkelabels.dk). 
 
-This is a modified version of the officially supported version on [Pakkelabels.dk API](https://www.pakkelabels.dk/integration/api/). This version has composer integration, tests and will have better error handling.
+This is a modified version of the officially supported version on [Pakkelabels.dk API](https://www.pakkelabels.dk/integration/api/). This version has composer integration, tests, following PSR2 coding standards and better error handling.
 
 ## Examples
 
@@ -60,5 +60,5 @@ To create a test shipment with Post Danmark, and then output the Track&Trace num
       'test' => 'true' // Change to false when going live
     );
 
-    $shipment = $label->create_shipment($data);
+    $shipment = $label->createShipment($data);
     echo 'Track&Trace: ' . $shipment['pkg_no'];
