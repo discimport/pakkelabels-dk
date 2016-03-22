@@ -50,6 +50,7 @@ To display the PDF for the shipment ID with 42 inline in the browser:
     header('Content-Disposition: inline; filename="label.pdf"');
     echo $pdf;
 ?>
+```
 
 To create a test shipment with Post Danmark, and then output the Track&Trace number of the newly created shipment:
 
