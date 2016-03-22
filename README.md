@@ -1,13 +1,9 @@
 # Pakkelabels.dk PHP SDK
 [![Build Status](https://travis-ci.org/discimport/pakkelabels-dk.svg?branch=master)](https://travis-ci.org/discimport/pakkelabels-dk) [![Coverage Status](https://coveralls.io/repos/discimport/pakkelabels-dk/badge.svg)](https://coveralls.io/r/discimport/pakkelabels-dk) [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/discimport/pakkelabels-dk/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/discimport/pakkelabels-dk/?branch=master) [![Latest Stable Version](https://poser.pugx.org/discimport/pakkelabels/v/stable)](https://packagist.org/packages/discimport/pakkelabels) [![Total Downloads](https://poser.pugx.org/discimport/pakkelabels/downloads)](https://packagist.org/packages/discimport/pakkelabels) [![License](https://poser.pugx.org/discimport/pakkelabels/license)](https://packagist.org/packages/discimport/pakkelabels)
 
-PHP SDK for [Pakkelabels.dk API](https://www.pakkelabels.dk/integration/api/) from the Danish shipping service [Pakkelabels.dk](https://www.pakkelabels.dk). 
+PHP SDK for [Pakkelabels.dk API](https://api.pakkelabels.dk/v2/) from the Danish shipping service [Pakkelabels.dk](https://www.pakkelabels.dk). 
 
-This is a modified version of the officially supported version on [Pakkelabels.dk API](https://www.pakkelabels.dk/integration/api/). This version has composer integration, tests, following PSR2 coding standards and better error handling.
-
-## Examples
-
-The API for this PHP-SDK is still in development. There are some examples in the 'tests' directory.
+This is a modified version of the officially supported version on [Pakkelabels.dk API](https://api.pakkelabels.dk/v2/). This version has composer integration, tests, following PSR2 coding standards and better error handling.
 
 ## Getting started
 
