@@ -9,7 +9,8 @@ This is a modified version of the officially supported version on [Pakkelabels.d
 
 Below is a simple PHP script which illustrate the minimum amount of code needed to getting started.
 
-    <?php
+```php5
+<?php
     use Pakkelabels\Pakkelabels;
 
     try {
@@ -17,28 +18,43 @@ Below is a simple PHP script which illustrate the minimum amount of code needed 
     } catch (PakkelabelsException $e) {
       echo $e->getMessage();
     }
+?>
+```
 
 Once the $label object is created, you can begin to use the API.
 
 To see the current balance:
 
+```php5
+<?php
     echo $label->balance();
+?>
+```
 
 To list all Post Danmark shipments sent to to Denmark:
 
+```php5
+<?php
     $labels = $label->shipments(array('shipping_agent' => 'pdk', 'receiver_country' => 'DK'));
     print_r($labels);
+?>
+```
 
 To display the PDF for the shipment ID with 42 inline in the browser:
 
+```php5
+<?php
     $base64 = $label->pdf(42);
     $pdf = base64_decode($base64);
     header('Content-type: application/pdf');
     header('Content-Disposition: inline; filename="label.pdf"');
     echo $pdf;
+?>
 
 To create a test shipment with Post Danmark, and then output the Track&Trace number of the newly created shipment:
 
+```php5
+<?php
     $data = array(
       'shipping_agent' => 'pdk',
       'weight' => '1000',
@@ -58,3 +74,5 @@ To create a test shipment with Post Danmark, and then output the Track&Trace num
 
     $shipment = $label->createShipment($data);
     echo 'Track&Trace: ' . $shipment['pkg_no'];
+?>
+```
