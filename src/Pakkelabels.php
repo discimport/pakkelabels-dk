@@ -58,7 +58,14 @@ class Pakkelabels
      *
      * @var string
      */
-    const API_ENDPOINT = 'https://app.pakkelabels.dk/api/public/v1';
+    const API_ENDPOINT = 'https://app.pakkelabels.dk/api/public/v2';
+
+    /**
+     * API Endpoint URL
+     *
+     * @var string
+     */
+    const VERSION = '1.1';
 
     /**
      * API user
@@ -254,9 +261,10 @@ class Pakkelabels
     {
         $ch = curl_init();
         $params['token'] = $this->token;
+        $params['user_agent'] = 'pdk_php_library v' . self::VERSION;
 
         $query = http_build_query($params);
-        if ($doPost) {
+        if ($doPost === true) {
             curl_setopt($ch, CURLOPT_URL, self::API_ENDPOINT . '/' . $method);
             curl_setopt($ch, CURLOPT_POST, 1);
             curl_setopt($ch, CURLOPT_POSTFIELDS, $query);
