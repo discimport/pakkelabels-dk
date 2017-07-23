@@ -7,6 +7,7 @@
  * @category  Pakkelabels
  * @package   Pakkelabels
  * @author    Lars Olesen <lars@intraface.dk>
+ * @author    Hasse Ramlev Hansen <hasse@ramlev.dk>
  * @copyright 2015 Lars Olesen
  * @license   MIT Open Source License https://opensource.org/licenses/MIT
  * @version   GIT: <git_id>
@@ -144,6 +145,19 @@ class Pakkelabels
     }
 
     /**
+     * Get pickup points.
+     *
+     * @param array $params
+     *
+     * @return mixed
+     * @throws \PakkelabelsException
+     */
+    public function getPickupPoints($params = array())
+    {
+        return $this->makeApiCall('pickup_points', false, $params);
+    }
+
+    /**
      * Search shipments
      *
      * @param array $params
@@ -202,12 +216,14 @@ class Pakkelabels
     /**
      * Get freight rates
      *
+     * @param array $params
+     *
      * @return mixed
      * @throws \PakkelabelsException
      */
-    public function freightRates()
+    public function freightRates($params = array())
     {
-        $result = $this->makeApiCall('shipments/freight_rates');
+        $result = $this->makeApiCall('shipments/freight_rates', false, $params);
         return $result;
     }
 
@@ -235,6 +251,19 @@ class Pakkelabels
     {
         $result = $this->makeApiCall('shipments/gls_droppoints', false, $params);
         return $result;
+    }
+
+    /**
+     * Get PostDK Droppoints
+     *
+     * @param array $params
+     *
+     * @return mixed
+     * @throws \PakkelabelsException
+     */
+    public function pdkDroppoints($params)
+    {
+        return $this->makeApiCall('shipments/pdk_droppoints', false, $params);
     }
 
     /**
