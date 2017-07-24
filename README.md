@@ -77,3 +77,7 @@ To create a test shipment with Post Danmark, and then output the Track&Trace num
     echo 'Track&Trace: ' . $shipment['pkg_no'];
 ?>
 ```
+
+## Official library
+
+You can find the [official library at Github](https://github.com/pakkelabels/pakkelabels-php-sdk)
